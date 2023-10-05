@@ -1,0 +1,24 @@
+{
+    "projectId": "651addbd474e580e3c5d",
+    "projectName": "autofore",
+    "functions": [
+        {
+            "$id": "651ea0c2a9dfcdf15157",
+            "name": "createUser",
+            "runtime": "node-18.0",
+            "execute": [],
+            "events": [],
+            "schedule": "",
+            "timeout": 15,
+            "enabled": true,
+            "logging": true,
+            "entrypoint": "src/main.js",
+            "commands": "npm install",
+            "ignore": [
+                "node_modules",
+                ".npm"
+            ],
+            "path": "functions/createUser"
+        }
+    ]
+}
