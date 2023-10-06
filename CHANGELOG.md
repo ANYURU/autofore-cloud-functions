@@ -1,6 +1,6 @@
 # Changelog
 
-All notable changes to this project will be documented in this file.
+All notable changes to the autofore project cloud functions will be documented in this file.
 
 ## [Unreleased]
 
@@ -27,3 +27,5 @@ All notable changes to this project will be documented in this file.
   - Initial setup of the changelog file.
 - Populate changelog with initial content (chore)
   - Added the initial structure and content to the changelog.
+- Update the changelog (chore)
+
