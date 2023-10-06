@@ -1,33 +1,80 @@
-import { Client } from 'node-appwrite';
+import {
+  Client,
+  Databases,
+  Teams,
+  Users,
+  Permission,
+  Role,
+  ID,
+} from 'node-appwrite';
 
-// This is your Appwrite function
-// It's executed each time we get a request
-export default async ({ req, res, log, error }) => {
-  // Why not try the Appwrite SDK?
-  //
-  // const client = new Client()
-  //   .setEndpoint('https://cloud.appwrite.io/v1')
-  //   .setProject(process.env.APPWRITE_FUNCTION_PROJECT_ID)
-  //   .setKey(process.env.APPWRITE_API_KEY);
+export default async ({ req, res }) => {
+  const { phone, password, firstName } = JSON.parse(req.body);
+  const client = new Client()
+    .setEndpoint(process.env.APPWRITE_FUNCTION_ENDPOINT)
+    .setProject(process.env.APPWRITE_FUNCTION_PROJECT_ID)
+    .setKey(process.env.APPWRITE_FUNCTION_API_KEY);
 
-  // You can log messages to the console
-  log('Hello, Logs!');
-
-  // If something goes wrong, log an error
-  error('Hello, Errors!');
-
-  // The `req` object contains the request data
-  if (req.method === 'GET') {
-    // Send a response with the res object helpers
-    // `res.send()` dispatches a string back to the client
-    return res.send('Hello, World!');
+  if (!phone) {
+    return res.json({ ok: false, message: 'Phone not provided' }, 400);
   }
 
-  // `res.json()` is a handy helper for sending JSON
-  return res.json({
-    motto: 'Build Fast. Scale Big. All in One Place.',
-    learn: 'https://appwrite.io/docs',
-    connect: 'https://appwrite.io/discord',
-    getInspired: 'https://builtwith.appwrite.io',
-  });
+  if (!password) {
+    return res.json({ ok: false, message: 'Password not provided' }, 400);
+  }
+
+  if (!firstName) {
+    return res.json({ ok: false, message: 'First name not provided' }, 400);
+  }
+
+  const database = new Databases(client);
+  const teams = new Teams(client);
+  const users = new Users(client);
+
+  try {
+    // Create the user
+    const user = await users.create(ID.unique(), phone, undefined, password);
+
+    // Add the user to the custome's team.
+    const customerMembership = await teams.createMembership(
+      process.env.APPWRITE_FUNCTION_CUSTOMER_TEAM_ID,
+      [],
+      process.env.APPWRITE_FUNCTION_ENDPOINT,
+      undefined,
+      user.$id
+    );
+    
+    // Add the user's firstName, PhoneNumber and userId to the profiles collection.
+    const customerProfile = await database.createDocument(
+      process.env.APPWRITE_FUNCTION_DATABASE_ID,
+      process.env.APPWRITE_FUNCTION_PROFILES_COLLECTION_ID,
+      user.$id,
+      {
+        firstName,
+        phoneNumber: phone.slice(0, 10),
+        userId: user.$id,
+      },
+      [
+        Permission.read(Role.user(user.$id)),
+        Permission.read(Role.team(process.env.APPWRITE_FUNCTION_ADMIN_TEAM_ID)),
+        Permission.update(Role.user(user.$id)),
+        Permission.update(
+          Role.team(process.env.APPWRITE_FUNCTION_ADMIN_TEAM_ID)
+        ),
+        Permission.delete(Role.user(user.$id)),
+        Permission.delete(
+          Role.team(process.env.APPWRITE_FUNCTION_ADMIN_TEAM_ID)
+        ),
+      ]
+    );
+
+    return res.json({
+      ok: true,
+      message: 'User created successfully',
+      userId: customerProfile.$id,
+      customerMembershipId: customerMembership.$id,
+    });
+  } catch (error) {
+    return res.json({ ok: false, message: error.message }, 400);
+  }
 };
