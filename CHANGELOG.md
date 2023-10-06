@@ -1,31 +1,33 @@
 # Changelog
 
-All notable changes to the autofore project cloud functions will be documented in this file.
+## Version 1.0.0 (2023-10-07)
 
-## [Unreleased]
+### Features
 
-### Added
+- **appwrite**: Implement isUserRegistered function (06b7b19)
+  - Added the implementation for the `isUserRegistered` cloud function.
+  - Implemented phone number validation.
+  - Added user existence checks.
 
-- Implement `createUser` function (feat)
-  - Added the implementation for the `createUser` function, enabling the creation of new users with phone, password, and first name.
-  - Details on input validation, error handling, integration with the Appwrite API, and permissions setup for user documents.
+- **appwrite**: Implement createUser function (14f3341)
+  - Added the implementation for the `createUser` function.
+  - Enabled the creation of new users with phone, password, and first name.
+  - Interacts with the Appwrite service to handle user registration and profile creation.
+  - Includes details on input validation and error handling.
+  - Integration with the Appwrite API.
+  - Permissions setup for user documents.
 
-### Documentation Updates
+### Documentation
 
-- Update documentation for `createUser` function (docs)
-  - Updated the documentation for the `createUser` function, including additional information, improved formatting, and corrected links. No functional changes have been made.
+- **appwrite**: Update createUser function documentation (20f9b3c)
+  - Updated the documentation for the `createUser` function.
+  - Includes additional information, improved formatting, and corrected links.
 
 ### Chore
 
-- Initialize user registration function with boilerplate code (chore)
-  - Set up the initial structure and boilerplate for the user registration check function, providing a starter for further development.
-
-- Create user cloud function boilerplate (chore)
-  - Created boilerplate for the user cloud function.
-
-- Create an empty changelog (chore)
-  - Initial setup of the changelog file.
-- Populate changelog with initial content (chore)
-  - Added the initial structure and content to the changelog.
-- Update the changelog (chore)
-
+- **changelog**: Update changelog (c0dc05f)
+- **changelog**: Update changelog (44b5df7)
+- **changelog**: Populate changelog with initial content (8ff1773)
+- **changelog**: Create an empty changelog (a85edd2)
+- **appwrite**: Initialize user registration function with boilerplate code (5283c70)
+- **chore**: Create user cloud function boilerplate (6025097)
