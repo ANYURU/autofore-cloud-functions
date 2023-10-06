@@ -1,33 +1,45 @@
-import { Client } from 'node-appwrite';
+import { Client, Users, Query } from 'node-appwrite';
 
-// This is your Appwrite function
-// It's executed each time we get a request
 export default async ({ req, res, log, error }) => {
-  // Why not try the Appwrite SDK?
-  //
-  // const client = new Client()
-  //   .setEndpoint('https://cloud.appwrite.io/v1')
-  //   .setProject(process.env.APPWRITE_FUNCTION_PROJECT_ID)
-  //   .setKey(process.env.APPWRITE_API_KEY);
-
-  // You can log messages to the console
-  log('Hello, Logs!');
-
-  // If something goes wrong, log an error
-  error('Hello, Errors!');
-
-  // The `req` object contains the request data
-  if (req.method === 'GET') {
-    // Send a response with the res object helpers
-    // `res.send()` dispatches a string back to the client
-    return res.send('Hello, World!');
+  const { phone } = JSON.parse(req.body);
+  let emailFormattedPhoneString;
+  if (!phone) {
+    return res.json({ ok: false, message: 'Phone not provided' }, 400);
+  } else {
+    // Format the phone string into an email string
+    emailFormattedPhoneString = `${phone}@autofore.co`;
   }
 
-  // `res.json()` is a handy helper for sending JSON
-  return res.json({
-    motto: 'Build Fast. Scale Big. All in One Place.',
-    learn: 'https://appwrite.io/docs',
-    connect: 'https://appwrite.io/discord',
-    getInspired: 'https://builtwith.appwrite.io',
-  });
+  try {
+    // Create the appwrite client
+    const client = new Client()
+      .setEndpoint(process.env.APPWRITE_FUNCTION_ENDPOINT)
+      .setProject(process.env.APPWRITE_FUNCTION_PROJECT_ID)
+      .setKey(process.env.APPWRITE_FUNCTION_API_KEY);
+
+    // Instantiate the appwrite user's api using the appwrite client
+    const users = new Users(client);
+
+    // Fetch all the users with emails that are the same as the formatted email string
+    const response = await users.list([
+      Query.equal('email', emailFormattedPhoneString),
+    ]);
+
+    if (response?.total === 1) {
+      return res.json({
+        ok: true,
+        message: 'Phone number is already registered',
+        userExists: true,
+      });
+    } else if (response?.total === 0) {
+      return res.json({
+        ok: true,
+        message: 'Phone number is not registered',
+        userExists: false,
+      });
+    }
+  } catch (err) {
+    error(err);
+    return res.json({ ok: false, message: err?.message }, 400);
+  }
 };
