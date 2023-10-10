@@ -1,0 +1,220 @@
+commit ee9528e43b83bac281c2d8a780110ed233d7425d
+Author: David Derrick Anyuru <davidderrickanyuru@gmail.com>
+Date:   Tue Oct 10 18:40:14 2023 +0300
+
+    docs: Update README with getOtp function documentation
+
+commit bbe02cd8c0fb329a3afc72bd1ac2d7f8bd4be903
+Author: David Derrick Anyuru <davidderrickanyuru@gmail.com>
+Date:   Tue Oct 10 18:14:52 2023 +0300
+
+    docs: Update README with sendMessage function documentation
+
+commit 3693d96883664532b720e3aa131c0138fa48625a
+Author: David Derrick Anyuru <davidderrickanyuru@gmail.com>
+Date:   Tue Oct 10 17:51:23 2023 +0300
+
+    feat(appwrite): implement message sending function
+    
+    This commit adds the implementation for the message sending function. It enables sending messages to a specified phone number with a user-provided message.
+    
+    - Validates input data (phone, message).
+    - Sends the message using the specified utility function.
+    - Handles successful responses.
+    - Provides appropriate responses and error handling.
+    
+    Co-authored-by: David Derrick Anyuru <davidderrickanyuru@gmail.com>
+
+commit 734b2e0247fc02ef54604e5965e017bf0fe73755
+Author: David Derrick Anyuru <davidderrickanyuru@gmail.com>
+Date:   Tue Oct 10 17:20:48 2023 +0300
+
+    chore(appwrite): initialized the sendMessage appwrite function
+    
+    This commit sets up the initial structure and the boiler plate for the sendMessage function. It provides a starter for further development.
+    
+    Co-authored-by: David Derrick Anyuru <davidderrickanyuru@gmail.com>
+
+commit 7add75894ac8ecbd5153c41a2e7eb482de02e4b4
+Author: David Derrick Anyuru <davidderrickanyuru@gmail.com>
+Date:   Tue Oct 10 17:11:51 2023 +0300
+
+    feat(appwrite): implement OTP verification function
+    
+    This commit adds the implementation for the OTP verification function. It allows users to verify an OTP (One-Time Password) sent to their phone number by comparing it to a stored OTP in the database.
+    
+    - Initializes the Appwrite client.
+    - Validates input data (verification key, OTP, check).
+    - Decodes the verification key.
+    - Compares the check values to ensure the OTP is associated with the correct phone number.
+    - Retrieves the OTP document from the database.
+    - Checks if the OTP is expired.
+    - Verifies the OTP and updates the database if it matches.
+    - Handles various error scenarios and provides appropriate responses.
+    
+    Co-authored-by: David Derrick Anyuru <davidderrickanyuru@gmail.com>
+
+commit 20415716bb83856f5450e2a6907f9b6318a218ce
+Author: David Derrick Anyuru <davidderrickanyuru@gmail.com>
+Date:   Tue Oct 10 13:27:58 2023 +0300
+
+    chore: Initialized OTP verification function
+    
+    This creates an initial boiler plate provided by the apprite starter code and adds the Otp verification function to the appwrite project. This serves as aboiler plate for further development.
+    
+    Co-authored-by: David Derrick Anyuru <davidderrickanyuru@gmail.com>
+
+commit 3d7446872cc87a93417fc1850b21a32d1f5b5597
+Author: David Derrick Anyuru <davidderrickanyuru@gmail.com>
+Date:   Tue Oct 10 13:21:51 2023 +0300
+
+    fix(appwrite): get Otp function
+            - inconsistencies in environment variables.
+            - dynamic imports by changing them into named imports.
+            - error handling and logging
+    Co-authored-by: David Derrick Anyuru <davidderrickanyuru@gmail.com>
+
+commit 87e0753f042f442c09a3d33b387ccca6949c9c6a
+Author: David Derrick Anyuru <davidderrickanyuru@gmail.com>
+Date:   Tue Oct 10 10:37:39 2023 +0300
+
+    feat(appwrite): Implement getOtp function
+    This feature sends a message with an OTP on password recovery and phone verification.
+    The OTP sent in the one time password expires in a period of 3 minutes.
+    
+    Co-authored-by David Derrick Anyuru <davidderrickanyuru@gmail.com>
+
+commit 7963259f8d78b0872e65ad544a571362a2e12100
+Author: David Derrick Anyuru <davidderrickanyuru@gmail.com>
+Date:   Tue Oct 10 08:06:24 2023 +0300
+
+    chore(appwrite): initialize user registration function with boilerplate code
+    
+    This commit sets up the initial structure and the boiler plate for the get otp function. It provides a starter for further development.
+    
+    Co-authored-by: David Derrick Anyuru <davidderrickanyuru@gmail.com>
+
+commit ddf9d8e24037334b5553317c4d9fd27a230df654
+Author: David Derrick Anyuru <davidderrickanyuru@gmail.com>
+Date:   Tue Oct 10 00:19:52 2023 +0300
+
+    feat(appwrite): password reset function implementation
+    
+    This commit adds the implementation for the password reset function. The function  allows users to reset their password by providing their phone number and new password.
+    
+    Co-authored-by: [David Derrick Anyuru] <davidderrickanyuru@gmail.com>
+
+commit 8dceef56327cda11015425233cafa8a08cc0f098
+Author: David Derrick Anyuru <davidderrickanyuru@gmail.com>
+Date:   Fri Oct 6 19:06:12 2023 +0300
+
+    chore(changelog): Update changelog for version 1.0.0
+    
+    Updated the changelog to document the changes for version 1.0.0. Added details for new features, documentation updates, and chore tasks. Linked commits to specific changes in the changelog.
+
+commit 23127cb2bf5932eaac70ab561976fb568db84639
+Author: David Derrick Anyuru <davidderrickanyuru@gmail.com>
+Date:   Fri Oct 6 19:01:24 2023 +0300
+
+    chore(changelog): Update changelog links
+    
+    Updated the changelog with version 1.0.0 and included links to individual commits for each change category, making it easier to access detailed information.
+    
+    - Added links to feature, documentation, and chore sections.
+    - Linked commits to specific changes.
+    
+    For a more detailed overview, please refer to the updated changelog.
+    
+    Related commit links:
+    - Features: [06b7b19](https://github.com/ANYURU/autofore-cloud-functions/commit/06b7b19fce6c6b93d7efb6966111a6af528d4047)
+    - Documentation: [20f9b3c](https://github.com/ANYURU/autofore-cloud-functions/commit/20f9b3cae9a4a060b69ce6024fd93ef74b315deb)
+    - Chore: [c0dc05f](https://github.com/ANYURU/autofore-cloud-functions/commit/c0dc05fd30191b166ee0810e0462d3730c6665a4)
+    
+    For more details, please see the changelog.
+
+commit feb5a9fffb840f97cf267907952a0da6a3543c1b
+Author: David Derrick Anyuru <davidderrickanyuru@gmail.com>
+Date:   Fri Oct 6 18:28:27 2023 +0300
+
+    chore(changelog): Update changelog for recent changes
+    
+    This commit updates the changelog to document the recent changes made to the project. It includes information about new features, documentation updates, and chore tasks.
+    
+    - Added entries for the `isUserRegistered` and `createUser` functions.
+    - Updated documentation for the `createUser` function.
+    - Included chore tasks related to the changelog itself.
+    
+    The changelog is now up to date with the latest project developments.
+
+commit 06b7b19fce6c6b93d7efb6966111a6af528d4047
+Author: David Derrick Anyuru <davidderrickanyuru@gmail.com>
+Date:   Fri Oct 6 18:12:56 2023 +0300
+
+    feat(appwrite): implement isUserRegistered function
+    
+    This commit adds the implementation for the `isUserRegistered` cloud function. It now includes phone number validation and user existence checks by formatting phone numbers into email strings and querying user data.
+    
+    - Implemented phone number validation.
+    - Added user existence checks.
+
+commit c0dc05fd30191b166ee0810e0462d3730c6665a4
+Author: David Derrick Anyuru <davidderrickanyuru@gmail.com>
+Date:   Fri Oct 6 17:20:56 2023 +0300
+
+    chore(changelog): update changelog
+
+commit 44b5df7002db139db6d8be0f6d8ecdd03d7ef957
+Author: David Derrick Anyuru <davidderrickanyuru@gmail.com>
+Date:   Fri Oct 6 17:20:38 2023 +0300
+
+    chore(changelog): update changelog
+
+commit 8ff1773c09b83bfbca6d7c9a61887efb4d683db6
+Author: David Derrick Anyuru <davidderrickanyuru@gmail.com>
+Date:   Fri Oct 6 17:14:52 2023 +0300
+
+    chore(changelog): populate changelog with initial content
+
+commit a85edd2d4c23e5867a3b0d81dd44b3eaa9a2b440
+Author: David Derrick Anyuru <davidderrickanyuru@gmail.com>
+Date:   Fri Oct 6 16:59:32 2023 +0300
+
+    chore(changelog): create an empty changelog
+
+commit 20f9b3cae9a4a060b69ce6024fd93ef74b315deb
+Author: David Derrick Anyuru <davidderrickanyuru@gmail.com>
+Date:   Fri Oct 6 11:30:55 2023 +0300
+
+    docs(appwrite): update createUser function documentation
+    
+    This commit updates the documentation for the `createUser` function. It includes additional information, improved formatting, and corrected links. No functional changes have been made.
+    
+    Co-authored-by: David Derrick Anyuru <davidderrickanyuru@gmail.com>
+
+commit 5283c70f63393bd0e41c5bae4ccce70444d108f2
+Author: David Derrick Anyuru <davidderrickanyuru@gmail.com>
+Date:   Fri Oct 6 10:45:37 2023 +0300
+
+    chore(appwrite): initialize user registration function with boilerplate code
+    
+    This commit sets up the initial structure and the boiler plate for the user registration check function. It provides the starter for further development
+
+commit 14f3341f68ecce6db7619ccd4d7e3ce2f27da198
+Author: David Derrick Anyuru <davidderrickanyuru@gmail.com>
+Date:   Fri Oct 6 10:31:45 2023 +0300
+
+    feat(appwrite): implement createUser function
+    
+    This commit adds the implementation for the `createUser` function. It enables the creation of new users with phone, password, and first name. The function interacts with the Appwrite service and handles user registration and profile creation.
+    
+    - Details on input validation and error handling.
+    - Integration with the Appwrite API.
+    - Permissions setup for user documents.
+    
+    Co-authored-by: David Derrick Anyuru <davidderrickanyuru@gmail.com>
+
+commit 60250975daec498e364ce73ce44cf5fa30684eab
+Author: David Derrick Anyuru <davidderrickanyuru@gmail.com>
+Date:   Thu Oct 5 14:50:57 2023 +0300
+
+    chore: create user cloud function boiler plate
