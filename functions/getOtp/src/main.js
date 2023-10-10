@@ -1,33 +1,105 @@
-import { Client } from 'node-appwrite';
+import { Client, Databases, ID } from 'node-appwrite';
+import generateOtp from './utils/generateOtp';
+import addMinutesToDate from './utils/addMinutesToDate';
+import encode from './utils/encode';
+import sendMessage from './utils/sendMessage';
 
-// This is your Appwrite function
-// It's executed each time we get a request
 export default async ({ req, res, log, error }) => {
-  // Why not try the Appwrite SDK?
-  //
-  // const client = new Client()
-  //   .setEndpoint('https://cloud.appwrite.io/v1')
-  //   .setProject(process.env.APPWRITE_FUNCTION_PROJECT_ID)
-  //   .setKey(process.env.APPWRITE_API_KEY);
+  // Destructuring the phone and type
+  const { phone, type } = JSON.parse(req.body);
 
-  // You can log messages to the console
-  log('Hello, Logs!');
+  // Initializing the client
+  const client = new Client()
+    .setEndpoint(process.env.APPWRITE_FUNCTION_ENDPOINT)
+    .setProject(process.env.APPWRITE_FUNCTION_PROJECT_ID)
+    .setKey(process.env.APPWRITE_FUNCTION_API_KEY);
 
-  // If something goes wrong, log an error
-  error('Hello, Errors!');
+  // Initalizing the database connection
+  const database = new Databases(client);
 
-  // The `req` object contains the request data
-  if (req.method === 'GET') {
-    // Send a response with the res object helpers
-    // `res.send()` dispatches a string back to the client
-    return res.send('Hello, World!');
+  // Request body validation
+  if (!phone) {
+    return res.json({ ok: false, message: 'Phone not provided' }, 400);
   }
 
-  // `res.json()` is a handy helper for sending JSON
-  return res.json({
-    motto: 'Build Fast. Scale Big. All in One Place.',
-    learn: 'https://appwrite.io/docs',
-    connect: 'https://appwrite.io/discord',
-    getInspired: 'https://builtwith.appwrite.io',
-  });
+  if (!type) {
+    return res.json({ ok: false, message: 'Type not provided' }, 400);
+  }
+
+  try {
+    const otp = generateOtp();
+    const now = new Date();
+    const expirationTime = addMinutesToDate(now, 3);
+
+    let message;
+
+    if (type) {
+      if (type === 'FORGOT PASSWORD') {
+        const generateMessage = await import(
+          './utils/messages/recoverPassword'
+        );
+        message = generateMessage(otp);
+      } else if (type === 'VERIFICATION') {
+        const generateMessage = await import(
+          './utils/messages/phoneVerification'
+        );
+        message = generateMessage(otp);
+      }
+    }
+
+    // Creating the otp document
+    const otpDocument = await database.createDocument(
+      process.env.APPWRITE_FUNCTION_DATABASE_ID,
+      process.env.APPWRITE_FUNCTION_OTPS_COLLECTION_ID,
+      ID.unique(),
+      {
+        otp: otp,
+        updatedAt: now,
+        createdAt: now,
+        expirationTime: expirationTime,
+      }
+    );
+
+    // Extract information for encoding
+    let details = {
+      timestamp: now,
+      check: phoneNumber,
+      success: true,
+      message: 'OTP sent successfully',
+      otpId: otpDocument.$id,
+    };
+
+    // Generate an encoded string of the details
+    const encoded = encode(JSON.stringify(details));
+
+    // Sending the message
+    sendMessage(phone, message)
+      .then(() => {
+        log('return ');
+        return res.json({
+          ok: true,
+          token: encoded,
+          message: 'OTP sent successfully',
+        });
+      })
+      .catch((err) => {
+        error(err);
+        return res.json(
+          {
+            ok: false,
+            message: error?.message,
+          },
+          400
+        );
+      });
+  } catch (err) {
+    error(error);
+    return res.json(
+      {
+        ok: false,
+        message: error?.message,
+      },
+      400
+    );
+  }
 };
