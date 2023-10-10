@@ -1,7 +1,10 @@
 import africastalking from 'africastalking';
 
 // Destructuring africa's talking API environment variables.
-const { AFRICASTALKING_USERNAME, AFRICASTALKING_APIKEY } = process.env;
+const {
+  APPWRITE_FUNCTION_AFRICASTALKING_USERNAME,
+  APPWRITE_FUNCTION_AFRICASTALKING_API_KEY,
+} = process.env;
 /**
  * @typedef {Object} Africastalking
  * @property {number} status 200 If the message is successfuly sent to the user and the entry is successfully added to the otps table in supabase. And 400 if the message is not not successfully sent to the user.
@@ -21,8 +24,8 @@ const { AFRICASTALKING_USERNAME, AFRICASTALKING_APIKEY } = process.env;
 export default function sendMessage(phone, msg, country_code = '+256') {
   const phone_number = country_code + phone.slice(1);
   const client = africastalking({
-    username: AFRICASTALKING_USERNAME,
-    apiKey: AFRICASTALKING_APIKEY,
+    username: APPWRITE_FUNCTION_AFRICASTALKING_USERNAME,
+    apiKey: APPWRITE_FUNCTION_AFRICASTALKING_API_KEY,
   });
 
   return client.SMS.send({

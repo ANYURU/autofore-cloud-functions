@@ -1,10 +1,12 @@
-import { createHash, createCipheriv, createDecipheriv } from 'crypto';
+import { createHash, createCipheriv } from 'node:crypto';
 
 // Get the unique key to encrypt our object
-const password = process.env.SECURITY_KEY;
+const password = process.env.APPWRITE_FUNCTION_SECURITY_KEY;
 
 // get the unique initailization vector
-const initailization_vector = Buffer.from(process.env.INITIALISATION_VECTOR);
+const initailization_vector = Buffer.from(
+  process.env.APPWRITE_FUNCTION_INITIALISATION_VECTOR
+);
 
 // To be used as salt in encryption and decryption
 const ivstring = initailization_vector.toString('hex').slice(0, 16);
@@ -39,7 +41,7 @@ function password_derive_bytes(password, salt, iterations, len) {
 }
 
 // Encoder
-export default function encode(string) {
+export default async function encode(string) {
   const key = password_derive_bytes(password, '', 100, 32);
   // Initialize cipher Object to encrypt using AES-256 algorithm
   const cipher = createCipheriv('aes-256-cbc', key, ivstring);
@@ -48,5 +50,3 @@ export default function encode(string) {
   const encrypted = Buffer.concat([part1, part2]).toString('base64');
   return encrypted;
 }
-
-

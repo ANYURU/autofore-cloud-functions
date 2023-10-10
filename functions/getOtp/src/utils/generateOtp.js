@@ -1,7 +1,7 @@
 /**
  * @function
  * @name generateOTP
- * @returns {Number} A six digit random code
+ * @returns {string} A six digit random code
  */
 
 export default function generateOTP() {
