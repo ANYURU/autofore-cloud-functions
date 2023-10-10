@@ -73,6 +73,24 @@
                 ".npm"
             ],
             "path": "functions/getOtp"
+        },
+        {
+            "$id": "6525271a5c9ebde8bf21",
+            "name": "verifyOtp",
+            "runtime": "node-18.0",
+            "execute": [],
+            "events": [],
+            "schedule": "",
+            "timeout": 15,
+            "enabled": true,
+            "logging": true,
+            "entrypoint": "src/main.js",
+            "commands": "npm install",
+            "ignore": [
+                "node_modules",
+                ".npm"
+            ],
+            "path": "functions/verifyOtp"
         }
     ]
 }
