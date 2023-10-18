@@ -14,7 +14,7 @@ export default async ({ res, error }) => {
     const teams = new Teams(client);
     const databases = new Databases(client);
 
-    // Fetch all the users with emails that are the same as the formatted email string
+    // Select phoneNumbers and firstNames of the admins from the user profiles
     const { memberships } = await teams.listMemberships(
       process.env.APPWRITE_FUNCTION_ADMIN_TEAM_ID
     );
