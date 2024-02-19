@@ -16,8 +16,8 @@ export default async ({ req, res, log, error }) => {
   const body = JSON.parse(req.body);
   const { intent } = body;
 
-  log("intent: ")
-  log(intent)
+  log('intent: ');
+  log(intent);
 
   try {
     // Initializing the client
@@ -94,6 +94,7 @@ export default async ({ req, res, log, error }) => {
     }
 
     if (intent === 'VERIFY') {
+      const currentDate = new Date();
       const { verificationKey, otp, check } = body;
 
       if (!verificationKey) {
