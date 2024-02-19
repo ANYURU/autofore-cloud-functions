@@ -9,7 +9,7 @@ import {
   Permission,
 } from 'node-appwrite';
 
-export default async ({ req, res, error }) => {
+export default async ({ req, res, log, error }) => {
   // Create the appwrite client
   const client = new Client()
     .setEndpoint(process.env.APPWRITE_FUNCTION_ENDPOINT)
@@ -24,6 +24,8 @@ export default async ({ req, res, error }) => {
   const body = JSON.parse(req.body);
 
   const { intent } = body;
+  log("Intent: ")
+  log(intent)
 
   if (intent === 'CHECK REGISTRATION STATUS') {
     const { phone } = body;
@@ -58,11 +60,9 @@ export default async ({ req, res, error }) => {
       error(err);
       return res.json({ ok: false, message: err?.message }, 400);
     }
-  }
-
-  if (intent === 'CREATE USER') {
+  } else if (intent === 'CREATE USER') {
     const { phone, password, firstName } = body;
-    
+
     if (!phone) {
       return res.json({ ok: false, message: 'Phone not provided' }, 400);
     }
@@ -123,5 +123,7 @@ export default async ({ req, res, error }) => {
     } catch (error) {
       return res.json({ ok: false, message: error.message }, 400);
     }
+  } else {
+    return res.json({ ok: false, message: 'Invalid intent.' }, 400);
   }
 };
