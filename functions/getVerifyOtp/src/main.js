@@ -16,6 +16,9 @@ export default async ({ req, res, log, error }) => {
   const body = JSON.parse(req.body);
   const { intent } = body;
 
+  log("intent: ")
+  log(intent)
+
   try {
     // Initializing the client
     const client = new Client()
