@@ -24,8 +24,6 @@ export default async ({ req, res, log, error }) => {
   const body = JSON.parse(req.body);
 
   const { intent } = body;
-  log("Intent: ")
-  log(intent)
 
   if (intent === 'CHECK REGISTRATION STATUS') {
     const { phone } = body;
