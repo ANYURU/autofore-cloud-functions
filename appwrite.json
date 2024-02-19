@@ -146,7 +146,9 @@
             "$id": "65d329fed7bbbe1423bb",
             "name": "getVerifyOtp",
             "runtime": "node-18.0",
-            "execute": [],
+            "execute": [
+                "any"
+            ],
             "events": [],
             "schedule": "",
             "timeout": 15,
